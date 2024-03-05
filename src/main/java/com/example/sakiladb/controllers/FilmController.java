@@ -73,7 +73,6 @@ public class FilmController {
         film.setTitle(updatedFilm.getTitle());
         film.setDescription(updatedFilm.getDescription());
         film.setRating(updatedFilm.getRating());
-        film.setLanguageId(updatedFilm.getLanguageId());
         film.setCategorySet(updatedFilm.getCategorySet());
 
         return filmRepository.save(film);

@@ -1,9 +1,14 @@
 package com.example.sakiladb.entities;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Year;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "film")
 public class Film {
     @Id
@@ -19,9 +24,6 @@ public class Film {
 
     @Column(name = "release_year")
     private Year releaseYear;
-
-    @Column(name = "language_id")
-    private int languageId;
 
     @Column(name = "rating")
     private String rating;
@@ -48,67 +50,4 @@ public class Film {
         this.actors = actors;
     }
 
-    public int getFilmId() {
-        return filmId;
-    }
-
-    public void setFilmId(int filmId) {
-        this.filmId = filmId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Year getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(Year releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    public int getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(int languageId) {
-        this.languageId = languageId;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public Set<Category> getCategorySet() {
-        return categorySet;
-    }
-
-    public void setCategorySet(Set<Category> categorySet) {
-        this.categorySet = categorySet;
-    }
-
-    public Set<Actor> getActors() {
-        return actors;
-    }
-
-    public void setActors(Set<Actor> actors) {
-        this.actors = actors;
-    }
 }

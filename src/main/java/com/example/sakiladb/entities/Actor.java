@@ -2,9 +2,13 @@ package com.example.sakiladb.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name="actor")
 public class Actor {
@@ -36,35 +40,4 @@ public class Actor {
         this.lastName = last;
     }
 
-    public int getActorId() {
-        return actorId;
-    }
-
-    public void setActorId(int actorId) {
-        this.actorId = actorId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Set<Film> getFilmsActedIn() {
-        return filmsActedIn;
-    }
-
-    public void setFilmsActedIn(Set<Film> filmsActedIn) {
-        this.filmsActedIn = filmsActedIn;
-    }
 }
