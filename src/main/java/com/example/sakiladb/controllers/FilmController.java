@@ -1,4 +1,5 @@
 package com.example.sakiladb.controllers;
+import com.example.sakiladb.entities.Actor;
 import com.example.sakiladb.entities.Category;
 import com.example.sakiladb.entities.Film;
 import com.example.sakiladb.repositories.FilmRepository;
@@ -82,14 +83,28 @@ public class FilmController {
     @PutMapping("/update/{id}")
     public Film updateFilmById(
             @PathVariable("id") int filmId,
-            @RequestBody Film updatedFilm
-    ){
+            @RequestBody Film updatedFilm){
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceAccessException(notFoundResponse));
 
         film.setTitle(updatedFilm.getTitle());
         film.setDescription(updatedFilm.getDescription());
         film.setRating(updatedFilm.getRating());
         film.setCategorySet(updatedFilm.getCategorySet());
+        film.setActors(updatedFilm.getActors());
+
+
+        return filmRepository.save(film);
+    }
+
+    @PutMapping("/updateActorFilms/{id}")
+    public Film updateActorFilms(
+            @PathVariable("id") int filmId,
+            @RequestBody Actor updatedActor
+    ){
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceAccessException(notFoundResponse));
+
+        // Add the updated actor to the film's list of actors
+        film.getActors().add(updatedActor);
 
         return filmRepository.save(film);
     }
