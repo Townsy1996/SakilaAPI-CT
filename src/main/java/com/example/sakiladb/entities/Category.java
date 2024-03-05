@@ -1,19 +1,51 @@
 package com.example.sakiladb.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
+import java.util.Set;
 
 @Entity
-@Getter
 @Table(name = "category")
 public class Category {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Short id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int categoryId;
 
     @Column(name = "name")
     private String name;
+
+    public Set<Film> getFilmSet() {
+        return filmSet;
+    }
+
+    public void setFilmSet(Set<Film> filmSet) {
+        this.filmSet = filmSet;
+    }
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categorySet")
+    Set<Film> filmSet;
+
+    public Category(){}
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

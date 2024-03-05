@@ -1,48 +1,44 @@
 package com.example.sakiladb.controllers;
-
 import com.example.sakiladb.entities.Actor;
-import com.example.sakiladb.input.ActorInput;
 import com.example.sakiladb.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
-import java.util.List;
 @CrossOrigin
 @RequestMapping("/actor")
 @RestController
 public class ActorController {
 
+    private final ActorRepository actorRepository;
+    private static final String notFoundResponse = "Actor not found";
+
     @Autowired
-    ActorRepository actorRepository;
-
-    @GetMapping("/getAll")
-    public List<Actor> listActors(){
-
-        return actorRepository.findAll();
+    public ActorController(ActorRepository actorRepository){
+        this.actorRepository = actorRepository;
     }
 
     @GetMapping("/get/{id}")
-    public Actor getActorById (@PathVariable Short id){
-        return actorRepository.findById(id)
-                .orElseThrow( () -> new ResourceAccessException("No such actor"));
+    public Actor getActorById(@PathVariable("id") int actorId){
+        return actorRepository.findById(actorId).orElseThrow(() -> new ResourceAccessException(notFoundResponse));
     }
 
-    @PostMapping("/create")
-    public Actor createActor(@RequestBody ActorInput data){
+    @GetMapping("/getAll")
+    public Iterable<Actor> getActors(){
+        return actorRepository.findAll();
+    }
 
-        final var actor = new Actor();
-        actor.setFirstName(data.getFirstName());
-        actor.setLastName(data.getLastName());
-        return actorRepository.save(actor);
+    @GetMapping("/getByFilmId/{id}")
+    public Iterable<Actor> getActorsByFilmId(@PathVariable("id") int filmId){
+        return actorRepository.findByFilmId(filmId);
     }
 
     @PutMapping("/update/{id}")
     public Actor updateActorById(
-            @PathVariable("id") Short actorId,
+            @PathVariable("id") int actorId,
             @RequestBody Actor updatedActor
     ){
-        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceAccessException("Actor not found"));
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceAccessException(notFoundResponse));
 
         actor.setFirstName(updatedActor.getFirstName());
         actor.setLastName(updatedActor.getLastName());
@@ -51,9 +47,13 @@ public class ActorController {
         return actorRepository.save(actor);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteActorById(@PathVariable("id") Short actorId){
-        actorRepository.deleteById(actorId);
+    @PostMapping("/create")
+    public Actor createActor(@RequestBody Actor newActor){
+        return actorRepository.save(newActor);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteActorById(@PathVariable("id") int actorId){
+        actorRepository.deleteById(actorId);
+    }
 }

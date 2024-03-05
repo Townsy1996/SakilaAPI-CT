@@ -1,26 +1,23 @@
 package com.example.sakiladb.entities;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import java.util.List;
+
+import java.util.Set;
 
 @Entity
-@Getter
-@Setter
-@Table(name = "actor")
-
-
+@Table(name="actor")
 public class Actor {
+    @Id
+    @Column(name = "actor_id", unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int actorId;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "actor_id")
-private Short id;
-@Column(name = "first_name")
-private String firstName;
-@Column(name = "last_name")
-private String lastName;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @JsonIgnore
     @ManyToMany
@@ -29,6 +26,45 @@ private String lastName;
             joinColumns = @JoinColumn(name = "actor_id"),
             inverseJoinColumns = @JoinColumn(name = "film_id")
     )
-    private List<Film> filmsActedIn;
+    private Set<Film> filmsActedIn;
 
+    public Actor(){}
+
+    public Actor(int id, String first, String last){
+        this.actorId = id;
+        this.firstName = first;
+        this.lastName = last;
+    }
+
+    public int getActorId() {
+        return actorId;
+    }
+
+    public void setActorId(int actorId) {
+        this.actorId = actorId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Set<Film> getFilmsActedIn() {
+        return filmsActedIn;
+    }
+
+    public void setFilmsActedIn(Set<Film> filmsActedIn) {
+        this.filmsActedIn = filmsActedIn;
+    }
 }

@@ -1,20 +1,15 @@
 package com.example.sakiladb.entities;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import java.time.Year;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "film")
-
 public class Film {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id")
-    private Short id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int filmId;
 
     @Column(name = "title")
     private String title;
@@ -23,16 +18,13 @@ public class Film {
     private String description;
 
     @Column(name = "release_year")
-    private Integer releaseYear;
+    private Year releaseYear;
 
-    @Column(name = "length")
-    private Short runTime;
+    @Column(name = "language_id")
+    private int languageId;
 
     @Column(name = "rating")
     private String rating;
-
-    @ManyToMany(mappedBy = "filmsActedIn")
-    private Set<Actor> actors;
 
     @ManyToMany
     @JoinTable(
@@ -41,19 +33,82 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     Set<Category> categorySet;
 
+    @ManyToMany(mappedBy = "filmsActedIn")
+    private Set<Actor> actors;
+
     public Film() {}
 
-    public Film(Short filmId, String title, String description, Integer releaseYear,String rating, Set<Actor> actors) {
-        this.id = filmId;
+    public Film(int filmId, String title, String description, Year releaseYear, String rating, Set<Category> categorySet, Set<Actor> actors) {
+        this.filmId = filmId;
         this.title = title;
         this.description = description;
         this.releaseYear = releaseYear;
         this.rating = rating;
+        this.categorySet = categorySet;
         this.actors = actors;
     }
 
+    public int getFilmId() {
+        return filmId;
+    }
 
+    public void setFilmId(int filmId) {
+        this.filmId = filmId;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Year getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(Year releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getLanguageId() {
+        return languageId;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId = languageId;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public Set<Category> getCategorySet() {
+        return categorySet;
+    }
+
+    public void setCategorySet(Set<Category> categorySet) {
+        this.categorySet = categorySet;
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
 }
