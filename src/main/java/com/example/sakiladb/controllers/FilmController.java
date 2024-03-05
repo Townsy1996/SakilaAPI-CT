@@ -105,7 +105,6 @@ public class FilmController {
 
         // Add the updated actor to the film's list of actors
         film.getActors().add(updatedActor);
-
         return filmRepository.save(film);
     }
 
