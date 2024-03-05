@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RequestMapping("/film")
@@ -56,6 +58,20 @@ public class FilmController {
     @GetMapping("/getByCatName/{catName}")
     public Iterable<Film> getFilmsByCatName(@PathVariable("catName") String catName){
         return filmRepository.findByCategoryName(catName);
+    }
+
+    @GetMapping("/getByRuntimeRange")
+    public List<Film> getFilmsByRuntimeRange(@RequestParam(required = false) Integer minRuntime,
+                                             @RequestParam(required = false) Integer maxRuntime) {
+        List<Film> films = filmRepository.findAll();
+
+        if (minRuntime != null && maxRuntime != null) {
+            films = films.stream()
+                    .filter(film -> film.getRunTime() >= minRuntime && film.getRunTime() <= maxRuntime)
+                    .collect(Collectors.toList());
+        }
+
+        return films;
     }
 
     @GetMapping("/getByActorId/{id}")

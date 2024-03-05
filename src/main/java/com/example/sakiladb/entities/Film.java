@@ -28,6 +28,9 @@ public class Film {
     @Column(name = "rating")
     private String rating;
 
+    @Column(name = "length")
+    private int runTime;
+
     @ManyToMany
     @JoinTable(
             name = "film_category",
@@ -40,7 +43,7 @@ public class Film {
 
     public Film() {}
 
-    public Film(int filmId, String title, String description, Year releaseYear, String rating, Set<Category> categorySet, Set<Actor> actors) {
+    public Film(int filmId, String title, String description, Year releaseYear, String rating, Set<Category> categorySet, Set<Actor> actors, int runTime) {
         this.filmId = filmId;
         this.title = title;
         this.description = description;
@@ -48,6 +51,7 @@ public class Film {
         this.rating = rating;
         this.categorySet = categorySet;
         this.actors = actors;
+        this.runTime = runTime;
     }
 
 }
