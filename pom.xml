@@ -15,6 +15,9 @@
 	<description>sakila api for frontend react project </description>
 	<properties>
 		<java.version>21</java.version>
+		<sonar.projectKey>Townsy1996_react-film-app</sonar.projectKey>
+		<sonar.organization>townsy1996</sonar.organization>
+		<sonar.login>6bb3a260df4bd1d26af5c54ab288d91bd232573a</sonar.login>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,6 +77,32 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.7</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>com/example/sakiladb/Steps/**/*</include>
+					</includes>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
