@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources", // Adjust this to point to your feature files
-        glue = {"com.example.sakiladb.Steps"} // Adjust to match the package structure of your step definitions
+        features = "src/test/resources",
+        glue = {"com.example.sakiladb.Steps"}
 )
 public class CucumberTestRunner {
 }
